@@ -1,0 +1,4 @@
+black<=22.11
+isort<=5.11
+pre-commit<=2.21
+-r server/requirements.txt
