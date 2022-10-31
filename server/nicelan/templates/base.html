@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %} - NiceLAN</title>
+
+    {% include 'includes/meta.html' %}
+    {% include 'includes/css.html' %}
+</head>
+<body>
+
+    {% include 'includes/sidebar.html' %}
+
+    <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      {% block content %}{% endblock content %}
+
+      {% include 'includes/footer.html' %}
+
+    </main>
+
+  {% include 'includes/scripts.html' %}
+
+  {% block javascripts %}{% endblock javascripts %}
+
+</body>
+</html>
