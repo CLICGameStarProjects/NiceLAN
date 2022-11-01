@@ -7,8 +7,8 @@ class Partaker(models.Model):
 
 
 class Player(Partaker):
-    discord = models.CharField(max_length=64)
-    Telegram = models.CharField(max_length=64)
+    discord = models.CharField(max_length=64, blank=True)
+    Telegram = models.CharField(max_length=64, blank=True)
 
 
 class Team(Partaker):
