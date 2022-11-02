@@ -1,4 +1,9 @@
 from django.shortcuts import render
 
 
-# Create your views here.
+def event_new(request):
+    pass
+
+
+def event_list(request):
+    return render(request, "event/list.html")
