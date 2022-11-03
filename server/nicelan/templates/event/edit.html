@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if form.instance.name %}Éditer{% else %}Créer{% endif %} - Events{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between w-100 flex-wrap">
+    <div class="mb-3 mb-lg-0">
+      <h1 class="h4">{% if form.instance.name %}Éditer{% else %}Créer{% endif %} - Events</h1>
+    </div>
+  </div>
+  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+      <li class="breadcrumb-item">
+        <a href="/">
+          <i class="fa-solid fa-house"></i>
+        </a>
+      </li>
+      <li class="breadcrumb-item"><a href="#">Events</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{% if form.instance.name %}Éditer{% else %}Créer{% endif %}
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="card border-0 shadow">
+  <div class="card-body">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="float-end">
+        <a class="btn btn-secondary" href="{% url 'event_list' %}">Annuler</a>
+        <input class="btn btn-primary" type="submit"
+               value="{% if form.instance.name %}Éditer{% else %}Créer{% endif %}">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

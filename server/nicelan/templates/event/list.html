@@ -22,7 +22,43 @@
   </nav>
 </div>
 
-
+<div class="card border-0 shadow">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th class="border-0 rounded-start">Nom</th>
+          <th class="border-0">Début</th>
+          <th class="border-0">Fin</th>
+          <th class="border-0">Nombre d'inscrit·e·s</th>
+          <th class="border-0">Nombre d'activités</th>
+          <th class="border-0 rounded-end"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+        <!-- Item -->
+        <tr>
+          <td class="border-0 fw-bold">{{event.name}}</td>
+          <td class="border-0">{{event.start_date}} {{event.start_time}}</td>
+          <td class="border-0">{{event.end_date}} {{event.end_time}}</td>
+          <td class="border-0">{{event.partaker_set.count}}</td>
+          <td class="border-0">{{event.activity_set.count}}</td>
+          <td class="border-0">
+            <a href="{% url 'event_edit' pk=event.pk %}" class="btn btn-sm btn-primary" type="button"><i
+              class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{% url 'event_delete' pk=event.pk %}" class="btn btn-sm btn-danger" type="button"><i
+              class="fa-solid fa-trash"></i></a>
+          </td>
+        </tr>
+        <!-- End of Item -->
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 {% block javascripts %}{% endblock javascripts %}

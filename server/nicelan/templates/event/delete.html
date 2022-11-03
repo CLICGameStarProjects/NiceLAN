@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}List - Events{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between w-100 flex-wrap">
+    <div class="mb-3 mb-lg-0">
+      <h1 class="h4">Supprimer - Events</h1>
+    </div>
+  </div>
+  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+      <li class="breadcrumb-item">
+        <a href="/">
+          <i class="fa-solid fa-house"></i>
+        </a>
+      </li>
+      <li class="breadcrumb-item"><a href="#">Events</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Supprimer</li>
+    </ol>
+  </nav>
+</div>
+<div class="card border-0 shadow">
+  <div class="card-body">
+    <form action="" method="post">
+      <p>Êtes-vous sûr·e de vouloir supprimer l'événement ?</p>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="float-end">
+        <a class="btn btn-secondary" href="{% url 'event_list' %}">Annuler</a>
+        <input class="btn btn-danger" type="submit"
+               value="Supprimer">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}
