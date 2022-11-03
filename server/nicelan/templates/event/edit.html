@@ -4,26 +4,26 @@
 {% block title %}{% if form.instance.name %}Éditer{% else %}Créer{% endif %} - Events{% endblock %}
 
 {% block content %}
-<div class="py-4">
-  <div class="d-flex justify-content-between w-100 flex-wrap">
-    <div class="mb-3 mb-lg-0">
-      <h1 class="h4">{% if form.instance.name %}Éditer{% else %}Créer{% endif %} - Events</h1>
-    </div>
-  </div>
-  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-      <li class="breadcrumb-item">
-        <a href="/">
-          <i class="fa-solid fa-house"></i>
-        </a>
-      </li>
-      <li class="breadcrumb-item"><a href="#">Events</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{% if form.instance.name %}Éditer{% else %}Créer{% endif %}
-      </li>
-    </ol>
-  </nav>
-</div>
 <div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">{% if form.instance.name %}Éditer{% else %}Créer{% endif %} - Events</h1>
+      </div>
+    </div>
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="/">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Events</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% if form.instance.name %}Éditer{% else %}Créer{%endif%}
+        </li>
+      </ol>
+    </nav>
+  </div>
   <div class="card-body">
     <form action="" method="post">
       {% csrf_token %}
