@@ -1,0 +1,3 @@
+# NiceLAN - Discord bot
+
+TODO!
