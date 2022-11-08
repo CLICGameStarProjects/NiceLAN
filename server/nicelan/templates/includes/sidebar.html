@@ -72,104 +72,6 @@
 
       <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 
-      <!-- Partaker -->
-      <span>
-        <span class="sidebar-icon">
-          <i class="fas fa-users  icon icon-xs me-2"></i>
-        </span>
-        <span class="sidebar-text">Partakers</span>
-      </span>
-
-      <!-- Player -->
-      <li class="nav-item {% if 'p/player/' in request.path %} active {% endif %}">
-        <span
-          class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-          data-bs-toggle="collapse" data-bs-target="#submenu-player">
-          <span>
-            <span class="sidebar-icon">
-              <i class="fas fa-user  icon icon-xs me-2"></i>
-            </span>
-            <span class="sidebar-text">Players</span>
-          </span>
-          <span class="link-arrow">
-            <i class="fa-solid fa-caret-right  icon icon-xs me-2"></i>
-          </span>
-        </span>
-        <div class="multi-level collapse {% if 'p/player/' in request.path %} show {% endif %}"
-             role="list" id="submenu-player" aria-expanded="false">
-          <ul class="flex-column nav">
-            <!-- New -->
-            <li class="nav-item {% if 'p/player/new' in request.path %} active {% endif %}">
-              <a class="nav-link" href="{% url 'dashboard' %}">
-                <span>
-                  <span class="sidebar-icon">
-                    <i class="fa-solid fa-plus  icon icon-xs me-2"></i>
-                  </span>
-                  <span class="sidebar-text">New Player</span>
-                </span>
-              </a>
-            </li>
-            <!-- List -->
-            <li class="nav-item {% if 'p/player/list' in request.path %} active {% endif %}">
-              <a class="nav-link" href="{% url 'dashboard' %}">
-                <span>
-                  <span class="sidebar-icon">
-                    <i class="fa-solid fa-list  icon icon-xs me-2"></i>
-                  </span>
-                  <span class="sidebar-text">All Players</span>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <!-- Team -->
-      <li class="nav-item {% if 'p/team/' in request.path %} active {% endif %}">
-        <span
-          class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-          data-bs-toggle="collapse" data-bs-target="#submenu-team">
-          <span>
-            <span class="sidebar-icon">
-              <i class="fas fa-user-friends  icon icon-xs me-2"></i>
-            </span>
-            <span class="sidebar-text">Teams</span>
-          </span>
-          <span class="link-arrow">
-            <i class="fa-solid fa-caret-right  icon icon-xs me-2"></i>
-          </span>
-        </span>
-        <div class="multi-level collapse {% if 'p/team/' in request.path %} show {% endif %}"
-             role="list" id="submenu-team" aria-expanded="false">
-          <ul class="flex-column nav">
-            <!-- New -->
-            <li class="nav-item {% if 'p/team/new' in request.path %} active {% endif %}">
-              <a class="nav-link" href="{% url 'dashboard' %}">
-                <span>
-                  <span class="sidebar-icon">
-                    <i class="fa-solid fa-plus  icon icon-xs me-2"></i>
-                  </span>
-                  <span class="sidebar-text">New Team</span>
-                </span>
-              </a>
-            </li>
-            <!-- List -->
-            <li class="nav-item {% if 'p/team/list' in request.path %} active {% endif %}">
-              <a class="nav-link" href="{% url 'dashboard' %}">
-                <span>
-                  <span class="sidebar-icon">
-                    <i class="fa-solid fa-list  icon icon-xs me-2"></i>
-                  </span>
-                  <span class="sidebar-text">All Teams</span>
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-
       <!-- Activity -->
       <span>
         <span class="sidebar-icon">
@@ -301,6 +203,104 @@
                     <i class="fa-solid fa-list  icon icon-xs me-2"></i>
                   </span>
                   <span class="sidebar-text">All Others</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+
+      <!-- Partaker -->
+      <span>
+        <span class="sidebar-icon">
+          <i class="fas fa-users  icon icon-xs me-2"></i>
+        </span>
+        <span class="sidebar-text">Partakers</span>
+      </span>
+
+      <!-- Player -->
+      <li class="nav-item {% if 'p/player/' in request.path %} active {% endif %}">
+        <span
+          class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse" data-bs-target="#submenu-player">
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-user  icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Players</span>
+          </span>
+          <span class="link-arrow">
+            <i class="fa-solid fa-caret-right  icon icon-xs me-2"></i>
+          </span>
+        </span>
+        <div class="multi-level collapse {% if 'p/player/' in request.path %} show {% endif %}"
+             role="list" id="submenu-player" aria-expanded="false">
+          <ul class="flex-column nav">
+            <!-- New -->
+            <li class="nav-item {% if 'p/player/new' in request.path %} active {% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fa-solid fa-plus  icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">New Player</span>
+                </span>
+              </a>
+            </li>
+            <!-- List -->
+            <li class="nav-item {% if 'p/player/list' in request.path %} active {% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fa-solid fa-list  icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">All Players</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Team -->
+      <li class="nav-item {% if 'p/team/' in request.path %} active {% endif %}">
+        <span
+          class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse" data-bs-target="#submenu-team">
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-user-friends  icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Teams</span>
+          </span>
+          <span class="link-arrow">
+            <i class="fa-solid fa-caret-right  icon icon-xs me-2"></i>
+          </span>
+        </span>
+        <div class="multi-level collapse {% if 'p/team/' in request.path %} show {% endif %}"
+             role="list" id="submenu-team" aria-expanded="false">
+          <ul class="flex-column nav">
+            <!-- New -->
+            <li class="nav-item {% if 'p/team/new' in request.path %} active {% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fa-solid fa-plus  icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">New Team</span>
+                </span>
+              </a>
+            </li>
+            <!-- List -->
+            <li class="nav-item {% if 'p/team/list' in request.path %} active {% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fa-solid fa-list  icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">All Teams</span>
                 </span>
               </a>
             </li>

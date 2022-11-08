@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}{{event.name}} - Events{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">{{event.name}} - Events</h1>
+      </div>
+    </div>
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="/">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Events</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{event.name}}</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Nom</dt>
+      <dd class="col-sm-9">{{event.name}}</dd>
+
+      <dt class="col-sm-3">Description</dt>
+      <dd class="col-sm-9">{{event.description|default:"[Nothing to see here...]"}}</dd>
+
+      <dt class="col-sm-3">Début</dt>
+      <dd class="col-sm-9">{{event.start_date}} {{event.start_time}}</dd>
+
+      <dt class="col-sm-3">Fin</dt>
+      <dd class="col-sm-9">{{event.end_date}} {{event.end_time}}</dd>
+
+      <dt class="col-sm-3">Nombre d'inscrit·e·s</dt>
+      <dd class="col-sm-9">{{event.players|length}}</dd>
+
+      <dt class="col-sm-3">Nombre d'activités</dt>
+      <dd class="col-sm-9">{{event.activity_set.count}}</dd>
+    </dl>
+  </div>
+  <div class="card-body">
+    <h2 class="h4">Liste des joueur·euse·s</h2>
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th class="border-0 rounded-start">Nom</th>
+          <th class="border-0">Discord</th>
+          <th class="border-0">Telegram</th>
+          <th class="border-0 rounded-end"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+        <!-- Item -->
+        <tr>
+          <td class="border-0 fw-bold">{{player.name}}</td>
+          <td class="border-0">{{player.discord}}</td>
+          <td class="border-0">{{player.telegram}}</td>
+          <td class="border-0">
+            <a href="{% url 'player_edit' pk=player.pk %}" class="btn btn-sm btn-primary" type="button"><i
+              class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{% url 'player_delete' pk=player.pk %}" class="btn btn-sm btn-danger" type="button"><i
+              class="fa-solid fa-trash"></i></a>
+          </td>
+        </tr>
+        <!-- End of Item -->
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'event_delete' pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-plus"></i> Ajouter</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <h2 class="h4">Liste des activités</h2>
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th class="border-0 rounded-start">Nom</th>
+          <th class="border-0">Catégorie</th>
+          <th class="border-0">Début</th>
+          <th class="border-0">Fin</th>
+          <th class="border-0 rounded-end"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for activity in activities %}
+        <!-- Item -->
+        <tr>
+          <td class="border-0 fw-bold">{{activity.name}}</td>
+          <td class="border-0">{{activity.discord}}</td>
+          <td class="border-0">{{activity.telegram}}</td>
+          <td class="border-0">
+            <a href="{% url 'activity_edit' pk=activity.pk %}" class="btn btn-sm btn-primary" type="button"><i
+              class="fa-solid fa-pen-to-square"></i></a>
+            <a href="{% url 'activity_delete' pk=activity.pk %}" class="btn btn-sm btn-danger" type="button"><i
+              class="fa-solid fa-trash"></i></a>
+          </td>
+        </tr>
+        <!-- End of Item -->
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'activity_new' event_pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-plus"></i> Ajouter</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'event_delete' pk=event.pk %}" class="btn btn-danger m-2" type="button"><i
+        class="fa-solid fa-trash"></i> Supprimer</a>
+      <a href="{% url 'event_edit' pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-pen-to-square"></i> Modifier</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

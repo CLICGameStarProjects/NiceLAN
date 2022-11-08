@@ -5,6 +5,10 @@ class Partaker(models.Model):
     name = models.CharField(max_length=64)
     event = models.ForeignKey("event.Event", on_delete=models.CASCADE)
 
+    @property
+    def is_player(self):
+        return isinstance(self, Player)
+
 
 class Player(Partaker):
     discord = models.CharField(max_length=64, blank=True)

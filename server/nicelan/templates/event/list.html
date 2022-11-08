@@ -39,16 +39,24 @@
         {% for event in events %}
         <!-- Item -->
         <tr>
-          <td class="border-0 fw-bold">{{event.name}}</td>
+          <td class="border-0 fw-bold"><a href="{% url 'event_show' pk=event.pk %}">{{event.name}}</a></td>
           <td class="border-0">{{event.start_date}} {{event.start_time}}</td>
           <td class="border-0">{{event.end_date}} {{event.end_time}}</td>
           <td class="border-0">{{event.partaker_set.count}}</td>
           <td class="border-0">{{event.activity_set.count}}</td>
           <td class="border-0">
-            <a href="{% url 'event_edit' pk=event.pk %}" class="btn btn-sm btn-primary" type="button"><i
-              class="fa-solid fa-pen-to-square"></i></a>
             <a href="{% url 'event_delete' pk=event.pk %}" class="btn btn-sm btn-danger" type="button"><i
               class="fa-solid fa-trash"></i></a>
+            <a href="{% url 'event_edit' pk=event.pk %}" class="btn btn-sm btn-primary" type="button"><i
+              class="fa-solid fa-pen-to-square"></i></a>
+            {% if current_event == event.pk %}
+            <div class="btn btn-sm btn-primary" type="button"><i
+              class="fa-solid fa-star"></i>
+            </div>
+            {% else %}
+            <a href="{% url 'event_select' pk=event.pk %}" class="btn btn-sm btn-secondary" type="button"><i
+              class="fa-regular fa-star"></i></a>
+            {% endif %}
           </td>
         </tr>
         <!-- End of Item -->

@@ -1,18 +1,14 @@
 from django.db import models
 
 
-OTH = "OTHER"
-ACTIVITY_CATEGORIES = [
-    (OTH, "Other"),
-]
-
-
 class Activity(models.Model):
     name = models.CharField(max_length=64)
     event = models.ForeignKey("event.Event", on_delete=models.CASCADE)
-    category = models.CharField(max_length=8, choices=ACTIVITY_CATEGORIES, default=OTH)  # TODO why?
-    start = models.DateTimeField()
-    end = models.DateTimeField()
+    category = models.CharField(max_length=64)
+    start_date = models.DateField()
+    start_time = models.TimeField()
+    end_date = models.DateField()
+    end_time = models.TimeField()
     place = models.CharField(max_length=64)  # TODO Model for places choices?
     team = models.BooleanField(default=False)
     description = models.CharField(max_length=1024)

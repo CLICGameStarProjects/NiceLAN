@@ -8,3 +8,7 @@ class Event(models.Model):
     end_date = models.DateField()
     end_time = models.TimeField()
     description = models.CharField(max_length=1024, blank=True)
+
+    @property
+    def players(self):
+        return [partaker for partaker in self.partaker_set.all() if partaker.is_player]
