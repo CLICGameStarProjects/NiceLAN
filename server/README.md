@@ -5,9 +5,10 @@
 Please follow the [main setup](../README.md). Then:
 
 1. `cd server/nicelan`
-2. `python manage.py makemigrations`
-3. `python manage.py migrate`
-4. `python manage.py createsuperuser` and follow the instructions
+2. `cp nicelan/nicelan/settingsLocal.py.dist settingsLocal.py`
+3. `python manage.py makemigrations`
+4. `python manage.py migrate`
+5. `python manage.py createsuperuser` and follow the instructions
 
 ## Usage
 
