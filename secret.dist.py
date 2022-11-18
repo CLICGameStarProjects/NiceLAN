@@ -1,0 +1,1 @@
+# file containing all the variables used by, for instance, the Telegram bot.
