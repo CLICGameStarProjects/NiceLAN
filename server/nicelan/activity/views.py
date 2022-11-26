@@ -4,7 +4,7 @@ from django.views.generic import CreateView, DeleteView, UpdateView
 
 
 from .forms import ActivityForm
-from .models import Activity
+from .models import Activity, Bracket
 
 
 def activity_show(request, pk):
@@ -21,7 +21,7 @@ def activity_list(request, event_pk):
 class ActivityCreateView(CreateView):
     model = Activity
     form_class = ActivityForm
-    template_name = "activity/edit.html"
+    template_name = "activity/new.html"
 
     def get_success_url(self):
         return reverse_lazy("activity_list")

@@ -11,19 +11,15 @@ class Activity(models.Model):
     end_time = models.TimeField()
     place = models.CharField(max_length=64)  # TODO Model for places choices?
     team = models.BooleanField(default=False)
-    description = models.CharField(max_length=1024)
+    description = models.TextField(max_length=1024)
 
+    @property
+    def points(self):
+        return {
+            activity_points.partaker.name: activity_points.points
+            for activity_points in self.activity_points_set.all()
+        }
 
-class Tournament(Activity):
-    points_min = models.IntegerField(default=0)
-    points_per_place = None  # TODO
-    format = None  # TODO
-    bracket = None  # TODO
-
-
-class Animation(Activity):
-    possible_points = models.IntegerField(default=0)  # TODO
-
-
-class Other(Activity):
-    pass
+    @property
+    def points_map(self):
+        return self.activity_points_mapping_set.all().order_by("position").asc()
