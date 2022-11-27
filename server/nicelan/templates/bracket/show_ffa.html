@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Bracket FFA{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">Bracket FFA</h1>
+      </div>
+    </div>
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="/">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="{% url 'activity_list' %}">Activités</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'activity_show' pk=activity.pk %}">{{activity.name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Bracket FFA</li>
+      </ol>
+    </nav>
+  </div>
+  
+  <div class="card-body">
+    <h2 class="h4">Bracket Fights</h2>
+    <div class="">
+      <!-- faire ici une grid css avec les bracketfights de cette bracket -->
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}
