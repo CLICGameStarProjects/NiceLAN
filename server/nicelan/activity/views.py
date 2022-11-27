@@ -4,7 +4,7 @@ from django.views.generic import CreateView, DeleteView, UpdateView
 
 
 from .forms import ActivityForm
-from .models import Activity, Bracket
+from .models import Activity
 
 
 def activity_show(request, pk):
