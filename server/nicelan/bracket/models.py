@@ -43,10 +43,13 @@ class Bracket(models.Model, ABC):
                 partaker=bracket_points.bracket_partaker.partaker,
             )
 
-    def _generate_bracket_fights():
+    def _init(self):
         pass
 
-    def _generate_bracket_points():
+    def _generate_bracket_fights(self):
+        pass
+
+    def _generate_bracket_points(self):
         pass
 
     # concludes the current step and either generates the next step (`False`)
@@ -54,6 +57,8 @@ class Bracket(models.Model, ABC):
     def proceed(self):
         if self.step == 0:
             self._init()
+            self.step = 1
+            self.save()
             return False
 
         # generates BracketPoints from BracketFightPoints
@@ -62,13 +67,12 @@ class Bracket(models.Model, ABC):
         # generates ActivityPoints from BracketPoints
         if self.step == self.max_step:
             self._generate_activity_points()
-            self.save()
             return True
 
         # the bracket proceeds to the next step
         self.step += 1
-        self._generate_bracket_fights()
         self.save()
+        self._generate_bracket_fights()
         return False
 
 
@@ -76,6 +80,8 @@ class SimpleTreeBracket(Bracket):
     # generates the first BracketFights and BracketPartakers
     def _init(self):
         partakers = list(self.activity.partaker_set.all())
+        if len(partakers) % 2 != 0:
+            return
         random.shuffle(partakers)
         for a, b in zip(partakers[::2], partakers[1::2]):
             fight = BracketFight.objects.create(bracket=self, step=1)
@@ -128,7 +134,7 @@ class FFABracket(Bracket):
     # generates the first BracketFights and the BracketPartakers
     def _init(self):
         partakers = self.activity.partaker_set.all()
-        ffa_fight = BracketFight.objects.create(bracket=self, step=0)
+        ffa_fight = BracketFight.objects.create(bracket=self, step=1)
         for partaker in partakers:
             BracketPartaker.objects.create(bracket=self, bracket_fight=ffa_fight, partaker=partaker)
 
