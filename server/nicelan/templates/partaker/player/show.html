@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{player.name}} - Players{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow">
+    <div class="card-header">
+        <div class="d-flex justify-content-between w-100 flex-wrap">
+            <div class="mb-3 mb-lg-0">
+                <h1 class="h4">{{player.name}} - Players</h1>
+            </div>
+        </div>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Players</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{player.name}}</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nom</dt>
+            <dd class="col-sm-9">{{player.name}}</dd>
+
+            <dt class="col-sm-3">Discord</dt>
+            <dd class="col-sm-9">{{player.discord}}</dd>
+
+            <dt class="col-sm-3">Telegram</dt>
+            <dd class="col-sm-9">{{player.Telegram}}</dd>
+
+            <dt class="col-sm-3">Event</dt>
+            <dd class="col-sm-9">{{player.event.name}}</dd>
+
+            <dt class="col-sm-3">Activités</dt>
+            <dd class="col-sm-9">{{player.activities}}</dd>
+        </dl>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-end">
+            <a href="{% url 'player_delete' pk=player.pk %}" class="btn btn-danger m-2" type="button"><i
+                    class="fa-solid fa-trash"></i> Supprimer </a>
+            <a href="{% url 'player_edit' pk=player.pk %}" class="btn btn-primary m-2" type="button"><i
+                    class="fa-solid fa-pen-to-square"></i> Modifier </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}
