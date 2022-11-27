@@ -79,11 +79,14 @@ class SimpleTreeBracket(Bracket):
         partakers = list(self.activity.partaker_set.all())
         if len(partakers) % 2 != 0:
             return
+
         random.shuffle(partakers)
         for a, b in zip(partakers[::2], partakers[1::2]):
             fight = BracketFight.objects.create(bracket=self, step=1)
             BracketPartaker.objects.create(bracket=self, bracket_fight=fight, partaker=a)
             BracketPartaker.objects.create(bracket=self, bracket_fight=fight, partaker=b)
+
+        BracketPointsMapping.create_points_mappings_for(self)
 
     def _generate_bracket_fights(self):
         winners = []
@@ -128,16 +131,13 @@ class DoubleTreeBracket(Bracket):
         self.simple_tree = SimpleTreeBracket.objects.create(
             activity=self.activity, step=1, max_step=self.max_step
         )
-        self.save()
 
-        nb_partakers = len(self.activity.partaker_set.all())
-        for position in range(nb_partakers):
-            BracketPointsMapping.objects.create(
-                position=position, points=nb_partakers - 1, bracket=self.simple_tree
-            )
+        BracketPointsMapping.create_points_mappings_for(self)
+        BracketPointsMapping.create_points_mappings_for(self.simple_tree)
 
         partakers = list(self.activity.partaker_set.all())
         random.shuffle(partakers)
+
         for a, b in zip(partakers[::2], partakers[1::2]):
             fight = BracketFight.objects.create(bracket=self.simple_tree, step=1)
             BracketPartaker.objects.create(
@@ -146,6 +146,8 @@ class DoubleTreeBracket(Bracket):
             BracketPartaker.objects.create(
                 bracket=self.simple_tree, bracket_fight=fight, partaker=b
             )
+
+        self.save()
 
     def _generate_bracket_fights(self):
         pass
@@ -160,6 +162,8 @@ class FFABracket(Bracket):
         ffa_fight = BracketFight.objects.create(bracket=self, step=1)
         for partaker in partakers:
             BracketPartaker.objects.create(bracket=self, bracket_fight=ffa_fight, partaker=partaker)
+
+        BracketPointsMapping.create_points_mappings_for(self)
 
     def _generate_bracket_fights(self):
         ffa_fight = BracketFight.objects.create(bracket=self, step=self.step)

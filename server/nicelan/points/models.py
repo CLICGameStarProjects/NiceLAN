@@ -17,6 +17,15 @@ class ActivityPointsMapping(PointsMapping):
 class BracketPointsMapping(PointsMapping):
     bracket = models.ForeignKey("Bracket", on_delete=models.CASCADE)
 
+    # creates the default points mapping for the given bracket
+    @staticmethod
+    def create_points_mappings_for(bracket):
+        nb_partakers = len(bracket.activity.partaker_set.all())
+        for position in range(nb_partakers):
+            BracketPointsMapping.objects.create(
+                position=position, points=nb_partakers - position, bracket=bracket
+            )
+
 
 class Points(models.Model):
     points = models.PositiveIntegerField()
