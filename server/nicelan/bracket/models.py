@@ -1,18 +1,21 @@
-from abc import ABC
 import random
 
 
 from django.db import models
 
 
+from ..partaker.models import Partaker
 from ..points.models import ActivityPoints, BracketPoints, BracketPointsMapping
 
 
-# collection of BracketFights
-class Bracket(models.Model, ABC):
+# Collection of BracketFights
+class Bracket(models.Model):
     activity = models.ForeignKey("activity.Activity", on_delete=models.CASCADE)
     step = models.PositiveIntegerField()
     max_step = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
 
     @property
     def current_fights(self):
@@ -22,9 +25,7 @@ class Bracket(models.Model, ABC):
     def points_map(self):
         return [
             bracket_points_mapping.points
-            for bracket_points_mapping in self.bracket_points_mapping_set.all()
-            .order_by("position")
-            .asc()
+            for bracket_points_mapping in self.bracket_points_mapping_set.all().order_by("position")
         ]
 
     @property
@@ -34,23 +35,23 @@ class Bracket(models.Model, ABC):
     def fights_for_step(self, step: int):
         return self.bracket_fight_set.filter(step=step)
 
-    # generates the first BracketFights and all the BracketPartakers
+    # Generates the first BracketFights and all the BracketPartakers
     def _init(self):
         pass
 
-    # generates all BracketFights for the current step
+    # Generates all BracketFights for the current step
     def _generate_bracket_fights(self):
         pass
 
-    # generates all BracketPoints for the current step, based on BracketFightPoints
+    # Generates all BracketPoints for the current step, based on BracketFightPoints
     def _generate_bracket_points(self):
         pass
 
-    # generates all ActivityPoints based on BracketPoints
+    # Generates all ActivityPoints based on BracketPoints
     def _generate_activity_points(self):
         pass
 
-    # concludes the current step and either generates the next step (`False`)
+    # Concludes the current step and either generates the next step (`False`)
     # or terminates the bracket (`True`)
     def proceed(self):
         if self.step == 0:
@@ -59,15 +60,15 @@ class Bracket(models.Model, ABC):
             self.save()
             return False
 
-        # generates BracketPoints from BracketFightPoints
+        # Generates BracketPoints from BracketFightPoints
         self._generate_bracket_points()
 
-        # generates ActivityPoints from BracketPoints
+        # Generates ActivityPoints from BracketPoints
         if self.step == self.max_step:
             self._generate_activity_points()
             return True
 
-        # the bracket proceeds to the next step
+        # The Bracket proceeds to the next step
         self.step += 1
         self.save()
         self._generate_bracket_fights()
@@ -123,6 +124,18 @@ class SimpleTreeBracket(Bracket):
                 step=self.step, bracket=self, bracket_partaker=loser, points=self.points_map[1]
             )
 
+    def _generate_activity_points(self):
+        # TODO Get the latest BracketPoints step-wise for each BracketPartaker.
+        all_bracket_points = (
+            self.bracket_points_set.all().group_by("bracket_partaker").latest().order_by("-points")
+        )
+        for position, bracket_points in enumerate(all_bracket_points):
+            ActivityPoints.objects.create(
+                activity=self.activity,
+                points=self.activity.points_map[position],
+                partaker=bracket_points.bracket_partaker.partaker,
+            )
+
 
 class DoubleTreeBracket(Bracket):
     simple_tree = models.ForeignKey("SimpleTree", on_delete=models.CASCADE)
@@ -175,7 +188,7 @@ class FFABracket(Bracket):
 
     def _generate_bracket_points(self):
         all_bracket_fight_points = (
-            self.current_fights[0].bracket_fight_points_set.all().order_by("points")
+            self.current_fights[0].bracket_fight_points_set.all().order_by("-points")
         )
         for position, fight_points in enumerate(all_bracket_fight_points):
             BracketPoints.objects.create(
@@ -186,7 +199,9 @@ class FFABracket(Bracket):
             )
 
     def _generate_activity_points(self):
-        all_bracket_points = self.bracket_points_set.all().order_by("points")
+        # TODO FFABracket consists of several steps. A Partaker gets their ActivityPoints based on
+        # the sum of all their BracketPoints at each step.
+        all_bracket_points = self.bracket_points_set.all()
         for position, bracket_points in enumerate(all_bracket_points):
             ActivityPoints.objects.create(
                 activity=self.activity,
@@ -212,7 +227,7 @@ class BracketFight(models.Model):
         ]
 
 
-# intermediate model to represent Partakers in a Bracket and its BracketFights
+# Intermediate model to represent Partakers in a Bracket and its BracketFights
 class BracketPartaker(models.Model):
     partaker = models.ForeignKey("partaker.Partaker", on_delete=models.CASCADE)
     bracket = models.ForeignKey("Bracket", on_delete=models.CASCADE)
