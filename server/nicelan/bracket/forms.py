@@ -25,7 +25,7 @@ class BracketForm(ModelForm):
         }
 
 
-class FFABracket(BracketForm):
+class FFABracketForm(BracketForm):
     class Meta(BracketForm.Meta):
         model = FFABracket
         exclude = BracketForm.Meta.exclude + []

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{activity.name}} - Activités{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">{{activity.name}} - Activités</h1>
+      </div>
+    </div>
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="/">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Activités</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{activity.name}}</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Nom</dt>
+      <dd class="col-sm-9">{{activity.name}}</dd>
+
+      <!-- Insérer les autres champs ici... -->
+
+    </dl>
+  </div>
+
+  <div class="card-body">
+    <h2 class="h4">Liste des brackets</h2>
+    <div class="table-responsive">
+      <table class="table table-centered table-nowrap mb-0 rounded table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th class="border-0 rounded-start">Nom</th>
+          <th class="border-0">Type</th>
+          <th class="border-0">Nombre de steps</th>
+          <th class="border-0 rounded-end"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bracket in activity.bracket_set.all %}
+          <!-- Item -->
+          <tr>
+            <td class="border-0 fw-bold">{{bracket.name}}</td>
+            <td class="border-0">{{bracket.concrete_type}}</td>
+            <td class="border-0">{{bracket.max_step}}</td>
+            <td class="border-0">
+              <a href="{% url 'bracket_delete' pk=bracket.pk %}" class="btn btn-sm btn-danger" type="button"><i
+                class="fa-solid fa-trash"></i></a>
+            </td>
+          </tr>
+          <!-- End of Item -->
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'bracket_create_ffa' event_pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-plus"></i> Ajouter FFA</a>
+      <a href="{% url 'bracket_create_simple_tree' event_pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-plus"></i> Ajouter SimpleTree</a>
+      <a href="{% url 'bracket_create_double_tree' event_pk=event.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-plus"></i> Ajouter DoubleTree</a>
+    </div>
+  </div>
+
+  <!-- Insérer des autres listes ici -->
+  
+  <div class="card-body">
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'activity_delete' pk=activity.pk %}" class="btn btn-danger m-2" type="button"><i
+        class="fa-solid fa-trash"></i> Supprimer</a>
+      <a href="{% url 'activity_edit' pk=activity.pk %}" class="btn btn-primary m-2" type="button"><i
+        class="fa-solid fa-pen-to-square"></i> Modifier</a>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

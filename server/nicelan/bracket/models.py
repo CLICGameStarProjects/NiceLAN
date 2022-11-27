@@ -14,8 +14,29 @@ class Bracket(models.Model):
     step = models.PositiveIntegerField()
     max_step = models.PositiveIntegerField()
 
-    class Meta:
-        abstract = True
+    @property
+    def concrete_type(self):
+        """c.f. https://docs.djangoproject.com/en/3.2/topics/db/models/#multi-table-inheritance
+        if you want to understand these drugs."""
+        try:
+            self.ffabracket
+            return FFABracket
+        except FFABracket.DoesNotExist:
+            pass
+
+        try:
+            self.simpletreebracket
+            return SimpleTreeBracket
+        except SimpleTreeBracket.DoesNotExist:
+            pass
+
+        try:
+            self.doubletreebracket
+            return DoubleTreeBracket
+        except DoubleTreeBracket.DoesNotExist:
+            pass
+
+        raise ValueError("Unknown child class OR you instantiated Bracket directly, which you shouldn't.")
 
     @property
     def current_fights(self):

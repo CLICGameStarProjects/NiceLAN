@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Créer - Brackets{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="mb-3 mb-lg-0">
+        <h1 class="h4">Créer - Brackets</h1>
+      </div>
+    </div>
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+        <li class="breadcrumb-item">
+          <a href="/">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+        <li class="breadcrumb-item"><a href="{% url 'activity_list' %}">Activités</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'activity_show' pk=activity.pk %}">{{activity.name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Créer une bracket FFA</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="card-body">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="float-end">
+        <a class="btn btn-secondary" href="{% url 'activity_show' pk=activity.pk %}">Annuler</a>
+        <input class="btn btn-primary" type="submit"
+               value="Créer">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

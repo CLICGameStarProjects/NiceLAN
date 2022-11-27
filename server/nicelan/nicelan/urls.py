@@ -23,4 +23,5 @@ urlpatterns = [
     path("e/", include("event.urls")),
     path("p/", include("partaker.urls")),
     path("a/", include("activity.urls")),
+    path("b/", include("brakcket.urls")),
 ]

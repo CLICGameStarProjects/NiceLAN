@@ -1,35 +1,56 @@
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView
+from django.http.response import Http404, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+from activity.models import Activity
+
+from .forms import BracketFightForm, FFABracketForm
+from .models import Bracket, FFABracket, SimpleTreeBracket, DoubleTreeBracket, BracketFight
 
 
-from .forms import BracketFightForm, BracketForm
-from .models import Bracket, BracketFight
+def bracket_show_ffa(request, pk):
+    bracket = get_object_or_404(Bracket, pk)
+    return render(request, "bracket/show_ffa.html", {"bracket": bracket, "activity": bracket.activity})
 
 
-def activity_show(request, pk):
-    activity = get_object_or_404(Bracket, pk=pk)
-    players = activity.players
-    return render(request, "activity/show.html", {"activity": activity, "players": players})
+def bracket_show_simple_tree(request, pk):
+    pass
 
 
-def activity_list(request, event_pk):
-    activity = Bracket.objects.all().order_by("-start_date", "-start_time")
-    return render(request, "activity/list.html", {"activity": activity})
+def bracket_show_double_tree(request, pk):
+    pass
 
 
-class BracketCreateView(CreateView):
-    model = Bracket
-    form_class = BracketForm
-    template_name = "bracket/new.html"
+def bracket_create_ffa(request, activity_pk):
+    activity = get_object_or_404(Activity, activity_pk)
+    
+    if request.method == "POST":
+        form = FFABracketForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.activity = activity
+            instance.save()
+    else:
+        form = FFABracketForm()
 
-    def get_success_url(self):
-        return reverse_lazy("bracket_list")
+    return render(request, "bracket/create_ffa.html", {"form": form, "activity": activity})
 
 
-class BracketDeleteView(DeleteView):
-    model = Bracket
-    template_name = "bracket/delete.html"
+def bracket_create_simple_tree(request, activity_pk):
+    pass
 
-    def get_success_url(self):
-        return reverse_lazy("bracket_list")
+
+def bracket_create_double_tree(request, activity_pk):
+    pass
+
+
+def bracket_delete(request, pk):
+    bracket = get_object_or_404(Bracket, pk)
+    back_url = reverse("activity_show", args=[bracket.activity.pk])
+    
+    if request.method == "POST":
+        bracket.delete()
+        redirect(back_url)
+    
+    return render(request, "bracket/delete.html", {"activity": bracket.activity})
+

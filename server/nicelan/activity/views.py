@@ -7,9 +7,11 @@ from .forms import ActivityForm
 from .models import Activity
 
 
+from bracket.forms import FFABracketForm
+
+
 def activity_show(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
-    players = activity.players
     return render(request, "activity/show.html", {"activity": activity, "players": players})
 
 
